@@ -1,31 +1,44 @@
 // Requerimos los modulos que vamos a utilizar
 const express = require('express');
+const morgan = require('morgan');
 const colors = require('colors');
+
 
 // Creamos el servidor
 const server = express();
 
-// Middleware - Es un manejador de peticiones antes de que lleguen a las rutas
-function logger(req, res, next){
-    console.log("Request Recived");
+//--------- Settings ---------
+server.set('appName', 'Romero Express');
+server.set('port', 3000);
+server.set('view engine', 'ejs');
+
+
+/* Middleware - Es un manejador de peticiones antes de que lleguen a las rutas
+
+function logger(req, res, next) {
+    console.log(`Route Received: ${req.protocol}://${req.get('host')}${req.originalUrl}`);
     next();
-}
+}*/
 
-// Agregar comando para que express entienda los objetos json
-server.use(express.json());
-server.use(logger());
+server.use(express.json());                 // Agregar comando para que express entienda los objetos json
+//server.use(logger);                          Middleware
+server.use(morgan('dev'));                  // Middleware de rutas
 
-// Direccionamos la busqueda a lo que querramos mostrar
 
-server.all('/user', (req, res, next)=>{
+//--------- Routes ---------
+
+/* Direccionamos la busqueda a lo que querramos mostrar
+server.all('/user', (req, res, next) => {
     console.log('Por aqui paso');
     next();
-});
+});*/
 
 
 //--------- Metodo GET ---------
 server.get('/', (req, res) => {
-    res.send('Home - Peticion GET Recibida');
+    //res.send('Home - Peticion GET Recibida');
+    const data = [{ name: 'john' }, { name: 'joe' }, { name: 'cameron' }, { name: 'ryan' }]
+    res.render('index.ejs', { people: data });
 });
 
 server.get('/user', (req, res) => {
@@ -55,6 +68,7 @@ server.put('/contact', (req, res) => {
 
 server.put('/user/:id', (req, res) => {
     console.log(req.body);
+    console.log(req.params);
     res.send(`User ${req.params.id} actualizado`);
 });
 
@@ -69,7 +83,11 @@ server.delete('/user/:id', (req, res) => {
 });
 
 
+//--------- Middleware ---------
+server.use(express.static('src'));
+
 // Escuchamos en el puerto 3000
-server.listen(5000, () => {
-    console.log("Server on Port 5000".cyan);
+server.listen(server.get('port'), () => {
+    console.log(server.get('appName'));
+    console.log("Server on Port ", server.get('port'));
 });
