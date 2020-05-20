@@ -19,7 +19,7 @@ _Necesitaras tener instaladas las siguientes tecnologías para el uso de este pr
 _Para usar este proyecto necesitaras clonar este repositorio o descargarlo a tu ordenador. Si optas descargarlo de forma directa en la parte superior derecha del repositorio tendrás la opción, si no es tu caso puedes clonarlo usando el siguiente comando._
 
 ```ssh
-  $ git clone https://github.com/romerojoseing/test.git
+  $ git clone https://github.com/romerojoseing/curso-express.git
 ```
 
 _Para utilizar este proyecto deben usar el siguiente comando para instalar los modulos necesarios._
@@ -35,7 +35,7 @@ _Para utilizar este proyecto deben usar el siguiente comando para instalar los m
 _Para usar este proyecto tienes que ejecutar el siguiente comando y asi desplegar el servidor correspondiente._
 
 ```ssh
-  $ npx nodemon index.js
+  $ npm start
 ```
 
 <br>
